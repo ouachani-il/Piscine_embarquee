@@ -6,7 +6,7 @@
 #    By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/15 06:19:17 by ilouacha          #+#    #+#              #
-#    Updated: 2025/11/15 12:00:17 by ilouacha         ###   ########.fr        #
+#    Updated: 2025/11/16 01:32:11 by ilouacha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,6 @@ flash: $(HEX)
 
 # règle clean : supprime fichiers générés
 clean:
-	rm -f $(BIN) $(HEX)
+	rm -f $(BIN) $(HEX) *.d
 	
 .PHONY: all flash clean hex

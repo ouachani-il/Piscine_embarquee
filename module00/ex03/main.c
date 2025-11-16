@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 09:15:46 by ilouacha          #+#    #+#             */
-/*   Updated: 2025/11/15 11:02:04 by ilouacha         ###   ########.fr       */
+/*   Updated: 2025/11/15 23:05:51 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,18 @@ int main() {
     // Bouton relâché = HIGH
     // Bouton appuyé = LOW
     PORTD |= (1 << PD2);
-    uint8_t led_state = 0; // 0 : éteinte, 1 : allumée
+    uint8_t previous_button = 1; // 1 : relâché, 0 : appuyé
 
     while (1){
-        uint8_t button_state = (PIND & (1 << PIND2) ) ? 1 : 0;//1:bouton relaché, 0 sinon
+        uint8_t current_button = (PIND & (1 << PIND2) ) ? 1 : 0;//1:bouton relaché, 0 sinon
         // FRONT DESCENDANT : HIGH -> LOW => bouton pressé
-        if (button_state == 1 && led_state == 0){
-            PORTB |= (1 << PB0); //allumer la led
-            led_state = 1;
+        if (previous_button == 1 && current_button == 0){
+            // We have two ways to toggle the LED, either by using XOR or by using the PIN register
+            //PORTB ^= (1 << PB0); //allumer la led si éteinte, éteindre si allumée
+            PINB |= 1 <<PB0; //toggle de la led
         } 
-        else if (button_state == 1 && led_state == 1){
-            PORTB &= ~(1 << PB0); //éteindre la led
-            led_state = 0;
-        }
-        _delay_ms(10);
+        previous_button = current_button;
+        _delay_ms(10); //anti-rebond
     }
     
     

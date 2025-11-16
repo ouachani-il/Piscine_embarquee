@@ -1,1 +1,0 @@
-main.bin: main.c
